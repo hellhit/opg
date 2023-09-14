@@ -1,0 +1,17 @@
+[
+  { "id": 1,  "name": "Rotkvice",    "icon": "raddish",    "price": { "EUR": 3.26 }, "type": "povrće" },
+  { "id": 2,  "name": "Artičoke",    "icon": "artichoke",  "price": { "EUR": 9.44 }, "type": "povrće" },
+  { "id": 3,  "name": "Brokula",     "icon": "broccoli",   "price": { "EUR": 5.20 }, "type": "povrće" },
+  { "id": 4,  "name": "Kupus",       "icon": "cabbage",    "price": { "EUR": 0.95 }, "type": "povrće" },
+  { "id": 5,  "name": "Trešnje",     "icon": "cherry",     "price": { "EUR": 1.04 }, "type": "voće"   },
+  { "id": 6,  "name": "Mrkve",       "icon": "carrot",     "price": { "EUR": 4.82 }, "type": "povrće" },
+  { "id": 7,  "name": "Kukuruz",     "icon": "corn",       "price": { "EUR": 7.53 }, "type": "povrće" },
+  { "id": 8,  "name": "Grožđe",      "icon": "grapes",     "price": { "EUR": 4.94 }, "type": "voće"   },
+  { "id": 9,  "name": "Luk",         "icon": "onion",      "price": { "EUR": 6.45 }, "type": "povrće" },
+  { "id": 10, "name": "Naranče",     "icon": "orange",     "price": { "EUR": 9.95 }, "type": "voće"   },
+  { "id": 11, "name": "Grašak",      "icon": "peas",       "price": { "EUR": 2.61 }, "type": "povrće" },
+  { "id": 12, "name": "Ananas",      "icon": "pineapple",  "price": { "EUR": 1.62 }, "type": "voće"   },
+  { "id": 13, "name": "Steakovi",    "icon": "steak",      "price": { "EUR": 8.32 }, "type": "meso"   },
+  { "id": 14, "name": "Lubenice",    "icon": "watermelon", "price": { "EUR": 5.08 }, "type": "voće"   },
+  { "id": 15, "name": "Kobasice",    "icon": "sausage",    "price": { "EUR": 3.69 }, "type": "meso"   }
+]
