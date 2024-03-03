@@ -1,5 +1,6 @@
 <template>
   <main class="wrapper">
+    
     <h1>Proizvodi</h1>
 
     <div class="type-links">

@@ -1,8 +1,8 @@
 <template>
   <main class="wrapper">
     <h2>Detalji narudžbe</h2>
-
-    <div class="order-details">
+    <div v-if="purchaseSuccess" class="success-message">Uspješna kupnja</div>
+    <div v-if="!purchaseSuccess" class="order-details">
       <table class="order-table">
         <thead>
           <tr>
@@ -29,9 +29,9 @@
       </table>
     </div>
 
-    <h2>Podatci o kupcu</h2>
+    <h2 v-if="!purchaseSuccess" >Podatci o kupcu</h2>
 
-    <div class="customer-data form-section">
+    <div v-if="!purchaseSuccess" class="customer-data form-section">
       <label>
         Ime i prezime:
         <input v-model="customer.name" placeholder="Ime i prezime" />
@@ -46,9 +46,9 @@
       </label>
     </div>
 
-    <h2>Naćin plaćanja</h2>
+    <h2 v-if="!purchaseSuccess">Naćin plaćanja</h2>
 
-    <div class="payment-method form-section">
+    <div v-if="!purchaseSuccess" class="payment-method form-section">
       <label class="switch">
         <input type="checkbox" v-model="payOnDelivery" />
         <span class="slider"></span>
@@ -58,7 +58,7 @@
 
     <h2 v-if="!payOnDelivery">Plaćanje kreditnom karticom</h2>
 
-    <div class="payment-data form-section" v-if="!payOnDelivery">
+    <div v-if="!purchaseSuccess && !payOnDelivery " class="payment-data form-section">
       <div class="payment-data form-section">
         <label>
           Broj kartice:
@@ -75,7 +75,7 @@
       </div>
     </div>
 
-    <button @click="submitOrder">Pošalji narudžbu</button>
+    <button v-if="!purchaseSuccess" @click="submitOrder">Pošalji narudžbu</button>
   </main>
 </template>
 
@@ -99,6 +99,7 @@ export default {
         cvc: "",
       },
       payOnDelivery: false,
+      purchaseSuccess: false,
       cartItems: [], // This will be populated with the items in the cart from the route params
     };
   },
@@ -199,6 +200,12 @@ export default {
         )
         .then((response) => {
           console.log("Email successfully sent!", response);
+          this.purchaseSuccess = true;
+          this.cartItems = [];
+          sessionStorage.removeItem("cart");
+          setTimeout(() => {
+            this.$router.push({ name: "HomeView" }); 
+          }, 2000); // 2 seconds delay
         })
         .catch((error) => {
           console.error("Email sending failed:", error);
@@ -297,6 +304,13 @@ input:checked + .slider {
 
 input:checked + .slider:before {
   transform: translateX(26px);
+}
+
+.success-message {
+  color: green;
+  font-size: 1.5em;
+  text-align: center;
+  margin-top: 20px;
 }
 </style>
 
