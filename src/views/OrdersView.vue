@@ -6,8 +6,8 @@
       <table class="order-table">
         <thead>
           <tr>
-            <th>Proizvod</th>
-            <th>Cijena</th>
+            <th>Usluga</th>
+            <th>Potrebno vrijeme</th>
             <th>Količina</th>
             <th>Ukupno</th>
           </tr>
@@ -15,21 +15,32 @@
         <tbody>
           <tr v-for="item in cartItems" :key="item.id">
             <td>{{ item.name }}</td>
-            <td>{{ item.price.EUR }} Eur</td>
+            <td>{{ item.time.min }} min</td>
             <td>{{ item.quantity }}</td>
-            <td>{{ item.quantity * item.price.EUR.toFixed(2) }} Eur</td>
+            
+            <td>
+              {{
+                item.quantity * item.time.min >= 60
+                  ? Math.floor(item.quantity * item.time.min / 60) +
+                    " hours " +
+                    (item.quantity * item.time.min) % 60 +
+                    " minutes"
+                  : Math.floor(item.quantity * item.time.min / 60) +
+                    " hours"
+              }}
+            </td>
           </tr>
         </tbody>
         <tfoot>
           <tr>
             <td colspan="3">Sveukupno</td>
-            <td>{{ calculateOverallTotal() }} Eur</td>
+            <td>{{ calculateOverallTotal() }} </td>
           </tr>
         </tfoot>
       </table>
     </div>
 
-    <h2 v-if="!purchaseSuccess" >Podatci o kupcu</h2>
+    <h2 v-if="!purchaseSuccess" >Podatci o naruđbi</h2>
 
     <div v-if="!purchaseSuccess" class="customer-data form-section">
       <label>
@@ -120,11 +131,18 @@ export default {
 
   methods: {
     calculateOverallTotal() {
-      return this.cartItems
-        .reduce((acc, item) => {
-          return acc + item.quantity * item.price.EUR;
-        }, 0)
-        .toFixed(2);
+      const totalMinutes = this.cartItems.reduce((acc, item) => {
+        return acc + item.quantity * item.time.min;
+      }, 0);
+
+      const hours = Math.floor(totalMinutes / 60);
+      const minutes = totalMinutes % 60;
+
+      if (minutes === 0) {
+        return `${hours} sati`;
+      } else {
+        return `${hours} sati i ${minutes} minuta`;
+      }
     },
 
     validateEmail(email) {

@@ -8,7 +8,7 @@
       <form>
         <div class="row">
           <div class="cell">
-            <label>Tip proizvoda:</label>
+            <label>Tip usluge:</label>
           </div>
           <div class="cell">
             <em>{{ product.type }}</em>
@@ -16,10 +16,10 @@
         </div>
         <div class="row">
           <div class="cell">
-            <label>Cijena:</label>
+            <label>Vrijeme:</label>
           </div>
           <div class="cell">
-            {{ product.price.EUR }} Eur
+            {{ product.time.min }} min
           </div>
         </div>
         <div class="row">

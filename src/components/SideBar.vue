@@ -25,9 +25,9 @@
             <tr v-for="(quantity, key, i) in cart" :key="i">
               <td><i class="icofont-carrot icofont-3x"></i></td>
               <td>{{ key }}</td>
-              <td>{{ getPrice(key) }} Eur</td>
+              <td>{{ getTime(key) }} Eur</td>
               <td class="center">{{ quantity }}</td>
-              <td>{{ quantity * getPrice(key) }} Eur</td>
+              <td>{{ quantity * getTime(key) }} min</td>
               <td class="center">
                 <button @click="remove(key)" class="btn btn-light cart-remove">
                   &times;
@@ -51,15 +51,15 @@
 export default {
   props: ['toggle', 'cart', 'inventory', 'remove'],
   methods: {
-    getPrice (name) {
+    getTime (name) {
       const product = this.inventory.find((p) => {
         return p.name === name
       })
-      return product.price.EUR
+      return product.time.min
     },
     calculateTotal () {
       const total = Object.entries(this.cart).reduce((acc, curr) => {
-        return acc + (curr[1] * this.getPrice(curr[0]))
+        return acc + (curr[1] * this.getTime(curr[0]))
       }, 0)
       return total.toFixed(2)
     },

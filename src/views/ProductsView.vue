@@ -5,9 +5,9 @@
 
     <div class="type-links">
   <button @click.prevent="selectType('sve')" :class="{ active: selectedType === 'sve' }">Sve</button>
-  <button @click.prevent="selectType('voće')" :class="{ active: selectedType === 'voće' }">Voće</button>
-  <button @click.prevent="selectType('povrće')" :class="{ active: selectedType === 'povrće' }">Povrće</button>
-  <button @click.prevent="selectType('meso')" :class="{ active: selectedType === 'meso' }">Meso</button>
+  <button @click.prevent="selectType('massage')" :class="{ active: selectedType === 'massage' }">Masaže</button>
+  <button @click.prevent="selectType('makeup')" :class="{ active: selectedType === 'makeup' }">Šminkanje</button>
+  <button @click.prevent="selectType('depilation')" :class="{ active: selectedType === 'depilation' }">Depilacija</button>
 </div>
 
 
