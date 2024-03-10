@@ -11,7 +11,12 @@
     "core-js": "^3.8.3",
     "emailjs-com": "^3.2.0",
     "firebase": "^10.3.1",
+    "flatpickr": "^4.6.13",
+    "luxon": "^3.4.4",
+    "v-calendar": "^3.1.2",
     "vue": "^3.2.13",
+    "vue-datetime": "^1.0.0-beta.14",
+    "vue-flatpickr-component": "^11.0.5",
     "vue-router": "^4.0.3"
   },
   "devDependencies": {
@@ -24,6 +29,7 @@
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
     "sass": "^1.66.1",
-    "sass-loader": "^12.0.0"
+    "sass-loader": "^12.0.0",
+    "vue-cli-plugin-vuetify": "~2.5.8"
   }
 }

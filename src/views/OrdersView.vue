@@ -41,10 +41,25 @@
         </tfoot>
       </table>
     </div>
+    <!-- Date time input enabled future dates, and minutes are in 30min -->
 
-    <h2 v-if="!purchaseSuccess" >Moji podaci</h2>
+    <div v-if="!purchaseSuccess" class="form-section">
+      <label>
+        Datum i vrijeme:
+        <!-- <input type="datetime-local" v-model="orderDate" /> -->
+        <flat-pickr v-model="orderDate" :config="config" />
+      </label>
+    </div>
 
-    <div v-if="!purchaseSuccess" class="customer-data form-section">
+    <!-- Button to check is time avaiable -->
+    <div class="button-container text-right">
+      <br/>
+      <button v-if="!purchaseSuccess" @click="checkAvaibleTime" class="btn btn-dark btn-lg">Provjeri dostupnost termina</button>
+    </div>
+
+    <h2 v-if="!purchaseSuccess && slotFree" >Moji podaci</h2>
+
+    <div v-if="!purchaseSuccess && slotFree" class="customer-data form-section">
       <label>
         Ime i prezime:
         <input v-model="customer.name" placeholder="Ime i prezime" />
@@ -58,26 +73,38 @@
    
     <div class="button-container text-right">
       <br/>
-      <button v-if="!purchaseSuccess" @click="submitOrder" class="btn btn-dark btn-lg">Rezerviraj termin</button>
+      <button v-if="!purchaseSuccess && slotFree" @click="submitOrder" class="btn btn-dark btn-lg">Rezerviraj termin</button>
     </div>
   </main>
 </template>
 
 <script>
 import emailjs from "emailjs-com";
+import flatPickr from 'vue-flatpickr-component';
+import 'flatpickr/dist/flatpickr.css';
 export default {
+  components: { flatPickr },
   props: ["inventory"],
-  // components: {
-  //   ProductCard
-  // },
   data() {
     return {
       customer: {
         name: "",
         email: "",
       },
+      orderDate: null,
+        config: {
+          enableTime: true,
+          noCalendar: false,
+          dateFormat: "d.m.Y H:i",
+          minTime: "09:00",
+          maxTime: "17:00",
+          time_24hr: true,
+          minuteIncrement: 30,
+
+        },
       purchaseSuccess: false,
-      cartItems: [], 
+      slotFree: false,
+      cartItems: [], // This will be populated with the items in the cart from the route params
     };
   },
   mounted() {
@@ -93,6 +120,7 @@ export default {
   },
 
   methods: {
+    
     calculateOverallTotal() {
       const totalMinutes = this.cartItems.reduce((acc, item) => {
         return acc + item.quantity * item.time.min;
@@ -115,6 +143,28 @@ export default {
       const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
       return re.test(email);
     },
+    checkAvaibleTime() {
+      if (!this.orderDate) {
+        alert("Molim odaberite datum i vrijeme.");
+        return;
+      }
+      const selectedDate = new Date(this.orderDate);
+      const selectedDateInMs = selectedDate.getTime();
+      const now = new Date();
+      const nowInMs = now.getTime();
+      if (selectedDateInMs < nowInMs) {
+        alert("Molim odaberite budući datum i vrijeme.");
+        return;
+      }
+      const selectedMinutes = selectedDate.getMinutes();
+      if (selectedMinutes % 30 !== 0) {
+        alert("Molim odaberite vrijeme u intervalima od 30 minuta.");
+        return;
+      }
+      alert("Termin je dostupan!");
+      this.slotFree = true;
+      //Budući korak: Provjeriti dostupnost termina na serveru ali pošto je ovo POC, to nije implementirano
+    },
 
     submitOrder() {
       if (!this.customer.name.trim()) {
@@ -127,13 +177,12 @@ export default {
         return;
       }
 
-      
-      // If all validations pass, proceed with the order submission
       console.log("Order submitted:", this.customer, this.payment);
 
       const emailData = {
         customer_name: this.customer.name,
         customer_email: this.customer.email,
+        customer_address: this.orderDate,
         order_items: this.cartItems
           .map(
             (item) =>
@@ -290,7 +339,7 @@ input:checked + .slider:before {
 
 .success-message {
   color: green;
-  font-size: 2em;
+  font-size: 1.5em;
   text-align: center;
   margin-top: 20px;
 }
