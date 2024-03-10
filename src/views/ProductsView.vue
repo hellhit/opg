@@ -1,13 +1,15 @@
 <template>
   <main class="wrapper">
+    <br/>
+    <br/>
     
-    <h1>Proizvodi</h1>
+    <h1>Usluge</h1>
 
     <div class="type-links">
   <button @click.prevent="selectType('sve')" :class="{ active: selectedType === 'sve' }">Sve</button>
-  <button @click.prevent="selectType('massage')" :class="{ active: selectedType === 'massage' }">Masaže</button>
-  <button @click.prevent="selectType('makeup')" :class="{ active: selectedType === 'makeup' }">Šminkanje</button>
-  <button @click.prevent="selectType('depilation')" :class="{ active: selectedType === 'depilation' }">Depilacija</button>
+  <button @click.prevent="selectType('masaža')" :class="{ active: selectedType === 'masaža' }">Masaže</button>
+  <button @click.prevent="selectType('šminkanje')" :class="{ active: selectedType === 'šminkanje' }">Šminkanje</button>
+  <button @click.prevent="selectType('depilacija')" :class="{ active: selectedType === 'depilacija' }">Depilacija</button>
 </div>
 
 

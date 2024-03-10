@@ -12,6 +12,8 @@
     background: $cardBackground
     margin-bottom: 20px
     color: $cardTextColor
+    border-radius: 20px // Adjust this value to get the desired rounding effect
+    overflow: hidden // This ensures that child elements don't overflow the rounded corners
     &:hover i
         opacity: 1.0
 
@@ -21,6 +23,8 @@
     background: $cardHeaderBackground
     padding: 10px
     font-size: 22px
+    border-top-left-radius: 20px // Match the value with .card's border-radius for top corners
+    border-top-right-radius: 20px // Match the value with .card's border-radius for top corners
 
 .card-body
     border: 1px solid $cardBorder
@@ -35,10 +39,10 @@
         display: inline-block
         font-weight: bold
         &:first-of-type
-            margin-top: 0px
+            margin-top: 5px
     input
         width: 100px
-        border: 1px solid $cardBorder
+        border: 2px solid $cardBorder
         padding: 4px
     .cell
         align-items: center
@@ -53,3 +57,5 @@
     margin-top: 15px
     padding: 10px
     text-align: right
+    border-bottom-left-radius: 20px // Match the value with .card's border-radius for bottom corners
+    border-bottom-right-radius: 20px // Match the value with .card's border-radius for bottom corners

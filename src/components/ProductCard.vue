@@ -1,10 +1,10 @@
 <template>
   <div class="card">
-    <div class="card-title">
+    <div class="card-title" style="padding-left: 10px;">
       {{ product.name }}
     </div>
     <div class="card-body">
-      <i class="icofont-10x icofont-{{ product.icon }}"></i>
+      <i v-bind:class="['fa-solid', product.icon, 'fa-3x']"></i>
       <form>
         <div class="row">
           <div class="cell">
@@ -34,7 +34,7 @@
     </div>
     <div class="card-footer">
       <button @click="addToCart(product.name, quantity)" class="btn btn-light">
-        Dodaj u košaricu
+        Dodaj u rezervaciju
       </button>
     </div>
   </div>

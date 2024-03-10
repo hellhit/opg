@@ -1,0 +1,25 @@
+[
+  { "id": 1,  "name": "Masaža cijelog tjela",   "icon": "fa-person-dots-from-line",    "time": { "min": 60 }, "type": "masaža" },
+  { "id": 2,  "name": "Masaža leđa",            "icon": "fa-person-dots-from-line",    "time": { "min": 30 }, "type": "masaža" },
+  { "id": 3,  "name": "Masaža nogu",            "icon": "fa-person-dots-from-line",    "time": { "min": 30 }, "type": "masaža" },
+  { "id": 4,  "name": "Masaža ruku",            "icon": "fa-person-dots-from-line",    "time": { "min": 30 }, "type": "masaža" },
+  { "id": 5,  "name": "Masaža lica",            "icon": "fa-person-dots-from-line",    "time": { "min": 30 }, "type": "masaža" },
+  { "id": 6,  "name": "Masaža stopala",         "icon": "fa-person-dots-from-line",    "time": { "min": 30 }, "type": "masaža" },
+  { "id": 7,  "name": "Masaža glave",           "icon": "fa-person-dots-from-line",    "time": { "min": 30 }, "type": "masaža" },
+  { "id": 8,  "name": "Masaža trbuha",          "icon": "fa-person-dots-from-line",    "time": { "min": 30 }, "type": "masaža" },
+  { "id": 9,  "name": "Masaža prsa",            "icon": "fa-person-dots-from-line",    "time": { "min": 30 }, "type": "masaža" },
+  { "id": 10, "name": "Masaža stražnjice",      "icon": "fa-person-dots-from-line",    "time": { "min": 30 }, "type": "masaža" },
+  { "id": 11, "name": "Masaža vrata",           "icon": "fa-person-dots-from-line",    "time": { "min": 30 }, "type": "masaža" },
+  { "id": 12, "name": "Masaža ramena",          "icon": "fa-person-dots-from-line",    "time": { "min": 30 }, "type": "masaža" },
+  { "id": 13, "name": "Šminkanje cijelog lica", "icon": "fa-solid fa-paintbrush",      "time": { "min": 60 }, "type": "šminkanje" },
+  { "id": 14, "name": "Šminkanje očiju",        "icon": "fa-solid fa-paintbrush",      "time": { "min": 30 }, "type": "šminkanje" },
+  { "id": 15, "name": "Šminkanje usana",        "icon": "fa-solid fa-paintbrush",      "time": { "min": 30 }, "type": "šminkanje" },
+  { "id": 16, "name": "Šminkanje obrva",        "icon": "fa-solid fa-paintbrush",      "time": { "min": 30 }, "type": "šminkanje" },
+  { "id": 17, "name": "Depilacija cijelog tjela","icon": "fa-solid fa-hand-scissors",    "time": { "min": 60 }, "type": "depilacija" },
+  { "id": 18, "name": "Depilacija nogu",        "icon": "fa-solid fa-hand-scissors",     "time": { "min": 30 }, "type": "depilacija" },
+  { "id": 19, "name": "Depilacija ruku",        "icon": "fa-solid fa-hand-scissors",     "time": { "min": 30 }, "type": "depilacija" },
+  { "id": 20, "name": "Depilacija lica",        "icon": "fa-solid fa-hand-scissors",     "time": { "min": 30 }, "type": "depilacija" },
+  { "id": 21, "name": "Depilacija pazuha",      "icon": "fa-solid fa-hand-scissors",     "time": { "min": 30 }, "type": "depilacija" },
+  { "id": 22, "name": "Depilacija bikini zone", "icon": "fa-solid fa-hand-scissors",     "time": { "min": 30 }, "type": "depilacija" }
+  
+]

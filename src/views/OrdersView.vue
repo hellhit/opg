@@ -1,7 +1,10 @@
 <template>
   <main class="wrapper">
-    <h2>Detalji narudžbe</h2>
-    <div v-if="purchaseSuccess" class="success-message">Uspješna kupnja</div>
+    <br/>
+    <br/>
+    
+    <h2>Detalji rezervacije</h2>
+    <div v-if="purchaseSuccess" class="success-message">Uspješna rezervacija</div>
     <div v-if="!purchaseSuccess" class="order-details">
       <table class="order-table">
         <thead>
@@ -22,11 +25,10 @@
               {{
                 item.quantity * item.time.min >= 60
                   ? Math.floor(item.quantity * item.time.min / 60) +
-                    " hours " +
+                    " sati " +
                     (item.quantity * item.time.min) % 60 +
-                    " minutes"
-                  : Math.floor(item.quantity * item.time.min / 60) +
-                    " hours"
+                    " minuta"
+                  : item.quantity * item.time.min + " minuta"
               }}
             </td>
           </tr>
@@ -40,7 +42,7 @@
       </table>
     </div>
 
-    <h2 v-if="!purchaseSuccess" >Podatci o naruđbi</h2>
+    <h2 v-if="!purchaseSuccess" >Moji podaci</h2>
 
     <div v-if="!purchaseSuccess" class="customer-data form-section">
       <label>
@@ -51,42 +53,13 @@
         Email adresa:
         <input v-model="customer.email" placeholder="Email" />
       </label>
-      <label>
-        Adresa za dostavu:
-        <input v-model="customer.address" placeholder="Adresa" />
-      </label>
     </div>
 
-    <h2 v-if="!purchaseSuccess">Naćin plaćanja</h2>
-
-    <div v-if="!purchaseSuccess" class="payment-method form-section">
-      <label class="switch">
-        <input type="checkbox" v-model="payOnDelivery" />
-        <span class="slider"></span>
-      </label>
-      <span>Plaćanje pouzećem</span>
+   
+    <div class="button-container text-right">
+      <br/>
+      <button v-if="!purchaseSuccess" @click="submitOrder" class="btn btn-dark btn-lg">Rezerviraj termin</button>
     </div>
-
-    <h2 v-if="!payOnDelivery">Plaćanje kreditnom karticom</h2>
-
-    <div v-if="!purchaseSuccess && !payOnDelivery " class="payment-data form-section">
-      <div class="payment-data form-section">
-        <label>
-          Broj kartice:
-          <input v-model="payment.cardNumber" placeholder="Broj kartice" />
-        </label>
-        <label>
-          Vrijedi do:
-          <input v-model="payment.expiryDate" placeholder="(MM/YY)" />
-        </label>
-        <label>
-          CVC:
-          <input v-model="payment.cvc" placeholder="CVC" type="password" />
-        </label>
-      </div>
-    </div>
-
-    <button v-if="!purchaseSuccess" @click="submitOrder">Pošalji narudžbu</button>
   </main>
 </template>
 
@@ -102,24 +75,14 @@ export default {
       customer: {
         name: "",
         email: "",
-        address: "",
       },
-      payment: {
-        cardNumber: "",
-        expiryDate: "",
-        cvc: "",
-      },
-      payOnDelivery: false,
       purchaseSuccess: false,
-      cartItems: [], // This will be populated with the items in the cart from the route params
+      cartItems: [], 
     };
   },
   mounted() {
-    // Retrieve the cart data from sessionStorage
     const cartData = JSON.parse(sessionStorage.getItem("cart") || "{}");
-    //const cartData = JSON.parse(sessionStorage.getItem('cart') || '{}');
     console.log("Retrieved cart data:", cartData);
-    // Transform the cart data to match the expected structure for cartItems
     this.cartItems = Object.entries(cartData).map(([productName, quantity]) => {
       const product = this.inventory.find((p) => p.name === productName);
       return {
@@ -140,9 +103,12 @@ export default {
 
       if (minutes === 0) {
         return `${hours} sati`;
+      } else if (hours === 0) {
+        return `${minutes} minuta`;
       } else {
         return `${hours} sati i ${minutes} minuta`;
       }
+      
     },
 
     validateEmail(email) {
@@ -161,81 +127,57 @@ export default {
         return;
       }
 
-      if (!this.customer.address.trim()) {
-        alert("Molim upišite adresu za dostavu.");
-        return;
-      }
-
-      // Validate credit card details if payOnDelivery is false
-      if (!this.payOnDelivery) {
-        if (
-          !this.payment.cardNumber.trim() ||
-          this.payment.cardNumber.length < 16
-        ) {
-          alert("Molim upišite broj kreditne kartice.");
-          return;
-        }
-
-        if (
-          !this.payment.expiryDate.trim() ||
-          !/^\d{2}\/\d{2}$/.test(this.payment.expiryDate)
-        ) {
-          alert("Molim upišite puno valjanost u formatu MM/GG.");
-          return;
-        }
-
-        if (!this.payment.cvc.trim() || this.payment.cvc.length !== 3) {
-          alert("Molim upišite valjani cvc (tri znamenke).");
-          return;
-        }
-      }
-
+      
       // If all validations pass, proceed with the order submission
       console.log("Order submitted:", this.customer, this.payment);
 
       const emailData = {
         customer_name: this.customer.name,
         customer_email: this.customer.email,
-        customer_address: this.customer.address,
         order_items: this.cartItems
           .map(
             (item) =>
-              `${item.name} - ${item.quantity} x ${item.price.EUR.toFixed(
+              `<br/>${item.name} - ${item.quantity} x ${item.time.min.toFixed(
                 2
-              )} Eur`
+              )} minuta`
           )
-          .join("<br>"),
+          .join(""),
         overall_total: this.calculateOverallTotal(),
       };
 
       // Send the email
       emailjs
         .send(
-          "service_qqde79m",
-          "template_hpgtqwl",
+          "service_pqxegmu",
+          "template_x9l3dmr",
           emailData,
-          "Z6jj03juRIv5dk4rC"
+          "7lCgY6dkownKIzBVq"
         )
         .then((response) => {
           console.log("Email successfully sent!", response);
+          
+          this.clearCart();
           this.purchaseSuccess = true;
-          this.cartItems = [];
-          sessionStorage.removeItem("cart");
           setTimeout(() => {
             this.$router.push({ name: "HomeView" }); 
-          }, 2000); // 2 seconds delay
+          }, 3000); // 2 seconds delay
         })
         .catch((error) => {
           console.error("Email sending failed:", error);
         });
     },
+    clearCart() {
+    // Clear the local component state
+    this.cartItems = [];
+
+    // Also clear the sessionStorage
+    sessionStorage.removeItem("cart");
+  },
   },
 };
 </script>
 
 <style scoped>
-/* ... existing styles ... */
-
 .form-section {
   margin: 20px 0;
   padding: 10px;
@@ -272,7 +214,29 @@ export default {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
+  background-color: lightpink;
 }
+
+/* Switch styles */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+}
+
 
 .order-table th {
   background-color: #f2f2f2;
@@ -326,7 +290,7 @@ input:checked + .slider:before {
 
 .success-message {
   color: green;
-  font-size: 1.5em;
+  font-size: 2em;
   text-align: center;
   margin-top: 20px;
 }
